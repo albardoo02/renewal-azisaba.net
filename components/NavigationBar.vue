@@ -22,7 +22,7 @@
         <li class="nav-item nav-parent" v-for="(level1Menu, index) in showMenu" :key="level1Menu.name">
           
           <div class="menu-link-wrapper">
-            <NuxtLink :to="level1Menu.to" @mouseover="handleMenuMouseOver(level1Menu)" @click="handleParentClick(level1Menu)" exact>
+            <NuxtLink :to="level1Menu.to" @mouseover="handleMenuMouseOver(level1Menu)" @click="handleParentClick(level1Menu)">
               {{ level1Menu.name }}
             </NuxtLink>
             
@@ -30,6 +30,7 @@
               v-if="level1Menu.menu"
               class="mobile-toggle-icon"
               type="button"
+              aria-haspopup="true"
               :aria-controls="`submenu-${index}`"
               :aria-expanded="level1Menu.show_menu"
               :aria-label="`${level1Menu.name}のサブメニューを開閉`"
@@ -46,7 +47,7 @@
             :class="{ 'is-submenu-open': level1Menu.show_menu }"
           >
             <li v-for="item in level1Menu.menu" :key="item.name">
-              <NuxtLink :to="item.to" @click="closeMobileMenu" exact>{{ item.name }}</NuxtLink>
+              <NuxtLink :to="item.to" @click="closeMobileMenu">{{ item.name }}</NuxtLink>
             </li>
           </ul>
 
@@ -162,34 +163,34 @@ onBeforeUnmount(() => {
   }
 })
 
-const rules = ref([
-  {name: "利用規約", showChildren: false, to: "/rules/terms"},
-  {name: "Minecraftサーバ個別規定", showChildren: false, to: "/rules/minecraft-server-policy"},
-  {name: "全体サーバールール", showChildren: false, to: "/rules/global-server-rules"},
-  {name: "各サーバールール", showChildren: false, to: "/rules/server-rules"},
-  {name: "Discordルール", showChildren: false, to: "/rules/discord"},
-  {name: "チャットガイドライン", showChildren: false, to: "/rules/chat-guidelines"},
-  {name: "運営登用規約", showChildren: false, to: "/rules/operating-terms-and-conditions"},
-  {name: "二次創作ガイドライン", showChildren: false, to: "/rules/derivative-works-guidelines"},
-])
+const rules = [
+  {name: "利用規約", to: "/rules/terms"},
+  {name: "Minecraftサーバ個別規定", to: "/rules/minecraft-server-policy"},
+  {name: "全体サーバールール", to: "/rules/global-server-rules"},
+  {name: "各サーバールール", to: "/rules/server-rules"},
+  {name: "Discordルール", to: "/rules/discord"},
+  {name: "チャットガイドライン", to: "/rules/chat-guidelines"},
+  {name: "運営登用規約", to: "/rules/operating-terms-and-conditions"},
+  {name: "二次創作ガイドライン", to: "/rules/derivative-works-guidelines"},
+]
 
-const connect = ref([
-  {name: "接続方法", showChildren: false, to: "/connect"},
-  {name: "接続アドレス", showChildren: false, to: "/connect/addresses"},
-])
+const connect = [
+  {name: "接続方法", to: "/connect"},
+  {name: "接続アドレス", to: "/connect/addresses"},
+]
 
-const donation = ref([
-  {name: "寄付ページ", showChildren: false, to: "https://store.azisaba.net/"},
-  {name: "寄付に関する注意事項", showChildren: false, to: "/donation/note"},
-  {name: "寄付金利用方法について", showChildren: false, to: "/donation/usage"},
-  {name: "特定商取引法に基づく表記", showChildren: false, to: "/donation/commercial-transactions"},
-])
+const donation = [
+  {name: "寄付ページ", to: "https://store.azisaba.net/"},
+  {name: "寄付に関する注意事項", to: "/donation/note"},
+  {name: "寄付金利用方法について", to: "/donation/usage"},
+  {name: "特定商取引法に基づく表記", to: "/donation/commercial-transactions"},
+]
 
-const other = ref([
-  {name: "サポート", showChildren: false, to: "/support"},
-  {name: "投票サイト", showChildren: false, to: "/links#投票サイト"},
-  {name: "リンク", showChildren: false, to: "/links"},
-])
+const other = [
+  {name: "サポート", to: "/support"},
+  {name: "投票サイト", to: "/links#投票サイト"},
+  {name: "リンク", to: "/links"},
+]
 
 const showMenu = ref([
   {name: "ホーム", show_menu: false, to: "/"},
