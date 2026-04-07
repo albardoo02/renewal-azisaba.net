@@ -22,7 +22,11 @@
         <li class="nav-item nav-parent" v-for="(level1Menu, index) in showMenu" :key="level1Menu.name">
           
           <div class="menu-link-wrapper">
-            <NuxtLink :to="level1Menu.to" @mouseover="handleMenuMouseOver(level1Menu)" @click="handleParentClick(level1Menu)">
+            <NuxtLink
+              :to="level1Menu.to"
+              @mouseover="handleMenuMouseOver(level1Menu)"
+              @click="handleParentClick(level1Menu, $event)"
+            >
               {{ level1Menu.name }}
             </NuxtLink>
             
@@ -84,7 +88,9 @@ const resetAll = () => {
 }
 
 const toggleSubMenu = (item) => {
-  item.show_menu = !item.show_menu
+  const nextState = !item.show_menu
+  resetAll()
+  item.show_menu = nextState
 }
 
 const handleMenuMouseOver = (item) => {
@@ -104,7 +110,12 @@ const handleResize = () => {
   }
 }
 
-const handleParentClick = (item) => {
+const handleParentClick = (item, event) => {
+  if (typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT && item.menu) {
+    event.preventDefault()
+    toggleSubMenu(item)
+    return
+  }
   if (!item.menu) {
     closeMobileMenu()
   }
